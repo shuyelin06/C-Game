@@ -1,2 +1,2 @@
 all:
-	gcc -Isrc/include -Lsrc/lib -o main main.c -lmingw32 -lSDL2main -lSDL2
+	gcc -I./include -L./lib -o main.exe src/main.c -lmingw32 -lSDL2main -lSDL2
