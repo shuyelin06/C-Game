@@ -6,6 +6,7 @@
 
 #include "game.h"
 
+
 int main(int argc, char** argv){
     // Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
@@ -27,26 +28,26 @@ int main(int argc, char** argv){
     }
 
     // Game Variables
-    SDL_bool *gameOver = malloc(sizeof(SDL_bool));
-    *gameOver = SDL_FALSE;
-
     // Dummy Pipe (Head Node)
     struct Pipe *dummyHead = malloc(sizeof(struct Pipe));
     dummyHead->next = NULL;
     dummyHead->_x = -1;
+    dummyHead->_pipeWidth = 0;
 
     // Bird
     Bird *bird = malloc(sizeof(Bird));
     bird->_x = 20;
     bird->_y = UPPER_Y / 2;
     bird->_yVel = 0;
-    bird->_width = 5;
-    bird->_height = 5;
+    bird->_width = 6;
+    bird->_height = 6;
 
     // Game
     Game *game = malloc(sizeof(Game));
     game->_bird = bird;
     game->_pipes = dummyHead;
+    game->_gameOver = SDL_FALSE;
+    game->score = 0;
 
     Uint64 lastTime = SDL_GetTicks64();
 
@@ -69,7 +70,7 @@ int main(int argc, char** argv){
         }
 
         // If the game isn't over, update the game
-        if (*gameOver == SDL_FALSE) {
+        if (game->_gameOver == SDL_FALSE) {
             // Get the time now to find time elapsed
             Uint64 timeNow = SDL_GetTicks64();
             
@@ -84,7 +85,6 @@ int main(int argc, char** argv){
         render(renderer, game);
     }
 
-    free(gameOver);
     free(dummyHead);
     free(bird);
     free(game);

@@ -28,26 +28,24 @@ static void drawBackground(SDL_Renderer *renderer) {
 static void drawBird(SDL_Renderer *renderer, Bird *bird) {
     int x = bird->_x * PIXELS_PER_UNIT;
     int y = SCREEN_HEIGHT - bird->_y * PIXELS_PER_UNIT;
-    int width = bird->_width * PIXELS_PER_UNIT / 2;
-    int height = bird->_height * PIXELS_PER_UNIT / 2;  
+    int w = bird->_width * PIXELS_PER_UNIT / 2;
+    int h = bird->_height * PIXELS_PER_UNIT / 2;  
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White Color
     SDL_RenderDrawLine(renderer, 
-        x - width, y - height, x - width, y + height);
+            x - w, y - h, x - w, y + h);
     SDL_RenderDrawLine(renderer, 
-        x - width, y + height, x + width, y + height);
+        x - w, y + h, x + w, y + h);
     SDL_RenderDrawLine(renderer, 
-        x + width, y + height, x + width, y - height);
+        x + w, y + h, x + w, y - h);
     SDL_RenderDrawLine(renderer, 
-        x + width, y - height, x - width, y - height);
+        x + w, y - h, x - w, y - h);
 }
 
 static void drawPipes(SDL_Renderer *renderer, struct Pipe *firstPipe) {
     struct Pipe *cur = firstPipe;
 
     while(cur) {
-        //printf("%d \n", cur->_x);
-
         int x = cur->_x * PIXELS_PER_UNIT;
         int pipeWidth = cur->_pipeWidth * PIXELS_PER_UNIT / 2;
 
