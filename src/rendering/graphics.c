@@ -9,7 +9,7 @@ static void drawPipes(SDL_Renderer *renderer, struct Pipe *firstPipe);
 void render(SDL_Renderer *renderer, Game *game) {
     // Draw Background
     drawBackground(renderer);
-    
+
     // Draw Bird
     drawBird(renderer, game->_bird);
     

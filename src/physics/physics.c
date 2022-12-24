@@ -30,7 +30,7 @@ static void updateBird(Game *game, Uint64 timeElapsed) {
 
     // Make sure bird does not go off screen
     if( bird->_y < LOWER_Y || bird->_y > UPPER_Y) {
-        printf("Game Over! Total Score: %d \n", game->score);
+        printf("Game Over (Press Space to Restart)! Total Score: %d \n", game->score);
         game->_gameOver = SDL_TRUE;
     } 
 }
@@ -86,7 +86,14 @@ static void updatePipes(Game *game, Uint64 timeElapsed) {
         newPipe->next = NULL;
 
         newPipe->_x = (prevPipe->_x + prevPipe->_pipeWidth / 2) + randomNumber(25, 35);
-        newPipe->_gapY = (prevPipe->_gapY + randomNumber(-10, 10));  
+        
+        if ( prevPipe->_gapY + 15 > UPPER_Y ) {
+            newPipe->_gapY = (prevPipe->_gapY + randomNumber(-5, -15));  
+        } else if ( prevPipe->_gapY - 15 < LOWER_Y ) {
+            newPipe->_gapY = (prevPipe->_gapY + randomNumber(5, 15));  
+        } else {
+            newPipe->_gapY = (prevPipe->_gapY + randomNumber(-10, 10));  
+        }
         
         newPipe->_gapHeight = randomNumber(20, 25);
         newPipe->_pipeWidth = randomNumber(8, 12);
@@ -130,7 +137,7 @@ static void checkForCollisions(Game *game) {
     }
 
     if ( collision == SDL_TRUE ) {
-        printf("Game Over! Total Score: %d \n", game->score);
+        printf("Game Over (Press Space to Restart)! Total Score: %d \n", game->score);
         game->_gameOver = SDL_TRUE;
     }
 }
