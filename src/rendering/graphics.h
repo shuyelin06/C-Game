@@ -11,6 +11,6 @@
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 500
 
-#define PIXELS_PER_UNIT 10
+#define PIXELS_PER_UNIT 5
 
-void render(SDL_Renderer *renderer, struct Game *game);
+void render(SDL_Renderer *renderer, Game *game);

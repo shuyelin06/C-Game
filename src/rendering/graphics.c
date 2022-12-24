@@ -1,15 +1,21 @@
 #include "graphics.h"
 
-static void drawBackground(SDL_Renderer *renderer);
-static void drawBird(SDL_Renderer *renderer, struct Bird *bird);
+#include <stdio.h>
 
-void render(SDL_Renderer *renderer, struct Game *game) {
+static void drawBackground(SDL_Renderer *renderer);
+static void drawBird(SDL_Renderer *renderer, Bird *bird);
+static void drawPipes(SDL_Renderer *renderer, struct Pipe *firstPipe);
+
+void render(SDL_Renderer *renderer, Game *game) {
     // Draw Background
     drawBackground(renderer);
     
     // Draw Bird
-    drawBird(renderer, &((*game)._bird));
+    drawBird(renderer, game->_bird);
     
+    // Draw Pipes
+    drawPipes(renderer, game->_pipes->next);
+
     // Render All
     SDL_RenderPresent(renderer);
 }
@@ -19,11 +25,11 @@ static void drawBackground(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer); // Black Screen
 }
 
-static void drawBird(SDL_Renderer *renderer, struct Bird *bird) {
-    int x = (*bird)._x * PIXELS_PER_UNIT;
-    int y = (*bird)._y * PIXELS_PER_UNIT;
-    int width = ((*bird)._width * PIXELS_PER_UNIT) / 2;
-    int height = ((*bird)._height * PIXELS_PER_UNIT) / 2;
+static void drawBird(SDL_Renderer *renderer, Bird *bird) {
+    int x = bird->_x * PIXELS_PER_UNIT;
+    int y = SCREEN_HEIGHT - bird->_y * PIXELS_PER_UNIT;
+    int width = bird->_width * PIXELS_PER_UNIT / 2;
+    int height = bird->_height * PIXELS_PER_UNIT / 2;  
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White Color
     SDL_RenderDrawLine(renderer, 
@@ -34,4 +40,38 @@ static void drawBird(SDL_Renderer *renderer, struct Bird *bird) {
         x + width, y + height, x + width, y - height);
     SDL_RenderDrawLine(renderer, 
         x + width, y - height, x - width, y - height);
+}
+
+static void drawPipes(SDL_Renderer *renderer, struct Pipe *firstPipe) {
+    struct Pipe *cur = firstPipe;
+
+    while(cur) {
+        //printf("%d \n", cur->_x);
+
+        int x = cur->_x * PIXELS_PER_UNIT;
+        int pipeWidth = cur->_pipeWidth * PIXELS_PER_UNIT / 2;
+
+        int gapY = SCREEN_HEIGHT - cur->_gapY * PIXELS_PER_UNIT;
+        int gapHeight = cur->_gapHeight * PIXELS_PER_UNIT / 2;
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White Color
+        // Draw the Upper Pipe
+        SDL_RenderDrawLine(renderer, 
+            x - pipeWidth, 0, x - pipeWidth, gapY - gapHeight);
+        SDL_RenderDrawLine(renderer, 
+            x - pipeWidth, gapY - gapHeight, x + pipeWidth, gapY - gapHeight);
+        SDL_RenderDrawLine(renderer, 
+            x + pipeWidth, gapY - gapHeight, x + pipeWidth, 0);
+
+        // Draw the Lower Pipe
+        SDL_RenderDrawLine(renderer, 
+            x - pipeWidth, SCREEN_HEIGHT, x - pipeWidth, gapY + gapHeight);
+        SDL_RenderDrawLine(renderer, 
+            x - pipeWidth, gapY + gapHeight, x + pipeWidth, gapY + gapHeight);
+        SDL_RenderDrawLine(renderer, 
+            x + pipeWidth, gapY + gapHeight, x + pipeWidth, SCREEN_HEIGHT);
+
+        // Increment Pointer
+        cur = cur->next;
+    }
 }

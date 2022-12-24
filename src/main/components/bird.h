@@ -1,11 +1,11 @@
 #pragma once 
 
-struct Bird {
-    int _x; // Center X
-    int _y; // Center Y 
+typedef struct {
+    double _x; // Center X
+    double _y; // Center Y 
 
-    int _yVel; // Y-Velocity
+    double _yVel; // Y-Velocity
 
-    int _width; // Width
-    int _height; // Height
-};
+    double _width; // Width
+    double _height; // Height
+} Bird;
