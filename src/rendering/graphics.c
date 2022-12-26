@@ -1,7 +1,5 @@
 #include "graphics.h"
 
-#include <stdio.h>
-
 static void drawBackground(SDL_Renderer *renderer);
 static void drawBird(SDL_Renderer *renderer, Bird *bird);
 static void drawPipes(SDL_Renderer *renderer, struct Pipe *firstPipe);

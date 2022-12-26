@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv){
     // Initialize SDL
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0){
+    if(SDL_Init(SDL_INIT_VIDEO) < 0){
         printf("Error: SDL failed to initialize\nSDL Error: '%s'\n", SDL_GetError());
         return 1;
     }
