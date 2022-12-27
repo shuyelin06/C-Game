@@ -11,7 +11,7 @@ LIB			= -L./lib
 LIBPATH 	:= -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 # Source Files 
-SOURCES		:= main/main.c rendering/graphics.c physics/physics.c
+SOURCES		:= main.c rendering/graphics.c physics/physics.c geometry/polygon.c components/game.c
 # Object Files
 OBJECTS 	:= $(patsubst %.c, bin/%.o, ${SOURCES})
 # Target File

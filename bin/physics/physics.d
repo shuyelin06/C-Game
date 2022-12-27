@@ -23,7 +23,5 @@ bin/physics/physics.o: src/physics/physics.c src/physics/physics.h \
  include/SDL2/SDL_render.h include/SDL2/SDL_shape.h \
  include/SDL2/SDL_system.h include/SDL2/SDL_timer.h \
  include/SDL2/SDL_version.h include/SDL2/SDL_locale.h \
- include/SDL2/SDL_misc.h src/physics/../main/game.h \
- src/physics/../main/components/bird.h \
- src/physics/../main/components/pipe.h \
- src/physics/../rendering/graphics.h
+ include/SDL2/SDL_misc.h src/components/game.h src/components/bird.h \
+ src/geometry/polygon.h src/components/pipe.h src/settings.h

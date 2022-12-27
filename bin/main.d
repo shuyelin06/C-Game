@@ -1,5 +1,6 @@
-bin/main/main.o: src/main/main.c include/SDL2/SDL.h \
- include/SDL2/SDL_main.h include/SDL2/SDL_stdinc.h \
+bin/main.o: src/main.c src/components/game.h src/components/bird.h \
+ src/geometry/polygon.h src/components/pipe.h src/settings.h \
+ include/SDL2/SDL.h include/SDL2/SDL_main.h include/SDL2/SDL_stdinc.h \
  include/SDL2/SDL_config.h include/SDL2/SDL_platform.h \
  include/SDL2/begin_code.h include/SDL2/close_code.h \
  include/SDL2/SDL_assert.h include/SDL2/SDL_atomic.h \
@@ -23,8 +24,5 @@ bin/main/main.o: src/main/main.c include/SDL2/SDL.h \
  include/SDL2/SDL_render.h include/SDL2/SDL_shape.h \
  include/SDL2/SDL_system.h include/SDL2/SDL_timer.h \
  include/SDL2/SDL_version.h include/SDL2/SDL_locale.h \
- include/SDL2/SDL_misc.h src/main/../rendering/graphics.h \
- src/main/../rendering/../main/game.h \
- src/main/../rendering/../main/components/bird.h \
- src/main/../rendering/../main/components/pipe.h \
- src/main/../physics/physics.h
+ include/SDL2/SDL_misc.h src/rendering/graphics.h \
+ include/SDL2/SDL_image.h include/SDL2/SDL.h src/physics/physics.h

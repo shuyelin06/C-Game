@@ -1,11 +1,12 @@
-#include <SDL2/SDL.h>
-
 #include <stdio.h>
 
-#include "../rendering/graphics.h"
-#include "../physics/physics.h"
+#include <components/game.h>
 
-#include "game.h"
+#include <rendering/graphics.h>
+#include <physics/physics.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 int main(int argc, char** argv){
     // Initialize SDL
@@ -13,8 +14,13 @@ int main(int argc, char** argv){
         printf("Error: SDL failed to initialize\nSDL Error: '%s'\n", SDL_GetError());
         return 1;
     }
+    // Initialize Image Loader
+    if(IMG_Init(IMG_INIT_PNG) == 0) {
+        printf("Error in image loading");
+    }
+
     // Initialize Window
-    SDL_Window *window = SDL_CreateWindow("SLD test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 960, 500, 0);
+    SDL_Window *window = SDL_CreateWindow("Umong As", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 960, 500, 0);
     SDL_SetWindowResizable(window, SDL_FALSE);
     if(!window){
         printf("Error: Failed to open window\nSDL Error: '%s'\n", SDL_GetError());
@@ -27,34 +33,22 @@ int main(int argc, char** argv){
         return 1;
     }
 
+    // Initialize Game Graphics
+    if ( initializeGraphics(renderer) == GRAPHICS_INIT_FAIL ) {
+        printf("Graphics Initialization Fail \n");
+        return 1;
+    }
+
     // Capture Keyboard State
     const Uint8 *keyboard = SDL_GetKeyboardState(NULL);
 
     // Program Running
     SDL_bool running = SDL_TRUE;
     while(running == SDL_TRUE){
-        // Game Variables
-        // Dummy Pipe (Head Node)
-        struct Pipe *dummyHead = malloc(sizeof(struct Pipe));
-        dummyHead->next = NULL;
-        dummyHead->_x = -1;
-        dummyHead->_pipeWidth = 0;
+        // Game 
+        Game *game = newGame();
 
-        // Bird
-        Bird *bird = malloc(sizeof(Bird));
-        bird->_x = 20;
-        bird->_y = UPPER_Y / 2;
-        bird->_yVel = 0;
-        bird->_width = 6;
-        bird->_height = 6;
-
-        // Game
-        Game *game = malloc(sizeof(Game));
-        game->_bird = bird;
-        game->_pipes = dummyHead;
-        game->_gameOver = SDL_FALSE;
-        game->score = 0;
-
+        // Update Timing
         Uint64 lastTime = SDL_GetTicks64();
 
         SDL_bool gameRunning = SDL_TRUE;
@@ -93,15 +87,21 @@ int main(int argc, char** argv){
             
             // Rendering
             render(renderer, game);
+            // Hitbox Rendering
+            if ( keyboard[SDL_SCANCODE_B] ) {
+                debug(renderer, game);
+            }
+            // Render All
+            SDL_RenderPresent(renderer);
         }
-
-        free(dummyHead);
-        free(bird);
-        free(game);
+        
+        freeGame(game);
     }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+
+    destroyGraphics();
 
     SDL_Quit();
 

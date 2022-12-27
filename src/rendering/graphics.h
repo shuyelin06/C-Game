@@ -1,16 +1,19 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
-#include "../main/game.h"
+#include <settings.h>
+#include <components/game.h>
 
 /*
     Graphics
 */
 
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 500
-
-#define PIXELS_PER_UNIT 5
+#define GRAPHICS_INIT_FAIL 0
 
 void render(SDL_Renderer *renderer, Game *game);
+void debug(SDL_Renderer *renderer, Game *game);
+
+int initializeGraphics(SDL_Renderer *renderer); 
+void destroyGraphics();
