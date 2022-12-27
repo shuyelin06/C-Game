@@ -15,7 +15,7 @@ SOURCES		:= main.c rendering/graphics.c physics/physics.c geometry/polygon.c com
 # Object Files
 OBJECTS 	:= $(patsubst %.c, bin/%.o, ${SOURCES})
 # Target File
-EXE  		= main.exe
+EXE  		= UmongAs.exe
 
 # Default Target
 default: all

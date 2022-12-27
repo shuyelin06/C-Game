@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"sdl_image.h": "c",
+			"game.h": "c"
+		}
+	}
+}
